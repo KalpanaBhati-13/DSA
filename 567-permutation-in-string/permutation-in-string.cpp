@@ -1,51 +1,46 @@
 class Solution {
-    bool checkEqual(int a[26], int b[26]) {
-        for (int i = 0; i < 26; i++) {
-            if (a[i] != b[i])
-                return false;
-        }
-        return true;
+bool checkEqual (int a[26], int b[26]){
+    for(int i =0; i<26; i++){
+        if(a[i] != b[i])
+        return 0;
     }
-
+    return 1;
+}
 public:
     bool checkInclusion(string s1, string s2) {
-        if (s1.length() > s2.length())
-            return false;
-
+        // charcter count array
         int count1[26] = {0};
-        for (char c : s1) {
-            count1[c - 'a']++;
+        for(int i=0; i<s1.length(); i++){
+            int index = s1[i] - 'a';
+            count1[index]++;
         }
-
+        //traverse s2 string in window of size s1 length and compare
+        int i =0;
         int windowsize = s1.length();
         int count2[26] = {0};
 
-        int i = 0;
-
-        // First window
-        while (i < windowsize) {
-            count2[s2[i] - 'a']++;
+        //running for first window
+        while(i < windowsize && i<s2.length()){
+            int index = s2[i] - 'a';
+            count2[index]++;
             i++;
         }
+        if(checkEqual(count1, count2))
+        return 1;
 
-        if (checkEqual(count1, count2))
-            return true;
-
-        // Slide the window
-        while (i < s2.length()) {
+        //aage window process karo 
+        while(i<s2.length()){
             char newChar = s2[i];
-            count2[newChar - 'a']++;
-
+            int index = newChar - 'a';
+            count2 [index]++;
             char oldChar = s2[i - windowsize];
-            count2[oldChar - 'a']--;
-
-            if (checkEqual(count1, count2))
-                return true;
-
+             index = oldChar - 'a';
+            count2 [index]--;
             i++;
-        }
 
-        return false;
+            if(checkEqual(count1, count2))
+            return 1;
+        }
+        return 0;
     }
 };
-
